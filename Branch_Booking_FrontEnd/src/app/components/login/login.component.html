@@ -1,0 +1,28 @@
+<div class="container py-5">
+  <div class="row justify-content-center mt-4">
+    <div class="col-md-5">
+      <div class="card card-enterprise p-4 shadow-sm">
+        <div class="text-center mb-4"> 
+          <h4 class="fw-bold mb-1">Sign In</h4>
+         </div> 
+        <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
+          <div class="mb-3">
+            <label class="form-label small fw-semibold">Username</label>
+            <input type="text" class="form-control" formControlName="username" placeholder="Enter username">
+          </div>
+          <div class="mb-4">
+            <label class="form-label small fw-semibold">Password</label>
+            <input type="password" class="form-control" formControlName="password" placeholder="Enter password">
+          </div>
+          <button type="submit" class="btn btn-primary w-100 py-2 fw-semibold" [disabled]="loginForm.invalid">
+            Sign In 
+          </button>
+        </form>
+
+        <p class="pt-3 text-muted small">
+          Use credentials: admin@gmail.com/admin123
+        </p>
+      </div>
+    </div>
+  </div>
+</div>

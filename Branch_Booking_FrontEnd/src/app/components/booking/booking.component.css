@@ -1,0 +1,38 @@
+.success-icon {
+  width: 64px;
+  height: 64px;
+}
+:host ::ng-deep ngb-datepicker {
+  border: 1px solid #dee2e6;
+  border-radius: 0.5rem; 
+}
+ 
+:host ::ng-deep .ngb-dp-weekdays {
+  background-color: #0d6efd;       
+  border-bottom: none;
+}
+
+:host ::ng-deep .ngb-dp-weekday {
+  width: 3.0rem;                  
+  height: 2.5rem;
+  line-height: 2.5rem;
+  color: #ffffff;                 
+  font-style: normal;             
+  font-weight: 600;
+  font-size: 0.85rem;
+}
+ 
+:host ::ng-deep .ngb-dp-day,
+:host ::ng-deep .ngb-dp-week-number {
+  width: 3.0rem;
+  height: 3.0rem;
+}
+
+:host ::ng-deep .ngb-dp-day .btn-light {
+  width: 2.75rem;
+  height: 2.75rem;
+  line-height: 2.5rem;
+  padding: 0;
+  border-radius: 0.5rem;
+}
+ 

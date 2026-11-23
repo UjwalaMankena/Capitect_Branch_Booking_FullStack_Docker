@@ -1,0 +1,211 @@
+<!-- Breadcrumb Bar -->
+
+<div class="container pb-5 pt-5">
+  @if (!confirmation) {
+  <div>
+    <h3 class="fw-bold mb-4">Book Appointment</h3>
+
+    <form [formGroup]="bookingForm" (ngSubmit)="submitBooking()">
+      <div class="row g-4">
+        <!-- COLUMN 1: Region, Branch & Calendar -->
+        <div class="col-lg-4">
+          <div class="card card-enterprise p-4 h-100">
+            <div class="mb-3">
+              <label class="form-label small fw-semibold">Select Region</label>
+              <select class="form-select" formControlName="region">
+                <option value="Gauteng">Gauteng</option>
+                <option value="Western Cape">Western Cape</option>
+                <option value="KwaZulu-Natal">KwaZulu-Natal</option>
+              </select>
+            </div>
+
+            <div class="mb-4">
+              <label class="form-label small fw-semibold">Select Branch Office</label>
+              <select class="form-select" formControlName="branch">
+                <option value="Midrand Branch">Midrand Branch</option>
+                <option value="Pretoria Central Branch">
+                  Pretoria Central Branch
+                </option>
+                <option value="Sandton City Branch">
+                  Sandton City Branch
+                </option>
+                <option value="Centurion Mall Branch">
+                  Centurion Mall Branch
+                </option>
+              </select>
+            </div>
+            <h6 class="fw-bold mb-3">Select Date</h6>
+            <div class="d-flex justify-content-center">
+              <ngb-datepicker formControlName="date" [minDate]="minDate" [markDisabled]="isDisabled"
+                [firstDayOfWeek]="7" [showWeekNumbers]="false" outsideDays="hidden">
+              </ngb-datepicker>
+            </div>
+          </div>
+        </div>
+
+        <!-- COLUMN 2: Available Time Slots -->
+        <div class="col-lg-4">
+          <div class="card card-enterprise p-4 h-100">
+            <h6 class="fw-bold mb-3">Select Available Time</h6>
+            <div class="row g-3">
+              @for (slot of timeSlots; track slot.time) {
+              <div class="col-4">
+                <button type="button" class="btn slot-btn w-100 small" [class.selected]="selectedTime === slot.time"
+                  [disabled]="!slot.available" (click)="selectTime(slot.time)">
+                  {{ slot.time }}
+                </button>
+              </div>
+              }
+            </div>
+            <div class="mt-4 pt-3 border-top small text-muted">
+              <div class="d-flex align-items-center gap-2 mb-1">
+                <span class="badge bg-primary">&nbsp;</span> Selected Slot ({{
+                selectedTime
+                }})
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-4">
+          <div class="card card-enterprise p-4 h-100">
+            <h6 class="fw-bold mb-3">Appointment Details</h6>
+
+            <div class="mb-3">
+              <label class="form-label small fw-semibold">Full Name</label>
+              <input type="text" class="form-control" formControlName="fullName" placeholder="Enter your full name" />
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label small fw-semibold">Email Address</label>
+              <input type="email" class="form-control" formControlName="email" placeholder="name@company.com" />
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label small fw-semibold">Phone Number</label>
+              <input type="tel" class="form-control" formControlName="phone" placeholder="+27 82 000 0000" />
+            </div>
+
+            <div class="mb-4">
+              <label class="form-label small fw-semibold">Purpose of Visit</label>
+
+              <select class="form-select" formControlName="purpose">
+                <option value="" disabled>Select a service</option>
+
+                <option value="Account Opening">Account Opening</option>
+                <option value="Account-Related Queries">Account-Related Queries</option>
+                <option value="Cash Deposit or Withdrawal">Cash Deposit or Withdrawal</option>
+                <option value="Update Personal Details or KYC Information">
+                  Update Personal Details or KYC Information
+                </option>
+                <option value="Request a Bank Statement">Request a Bank Statement</option>
+                <option value="Debit Card or Credit Card Issues">
+                  Debit Card or Credit Card-Related Issues
+                </option>
+                <option value="Internet or Mobile Banking Assistance">
+                  Internet/Mobile Banking Assistance
+                </option>
+                <option value="Fund Transfer Queries">Fund Transfer-Related Queries</option>
+                <option value="Cheque Deposit or Collection">Cheque Deposit or Collection</option>
+                <option value="Update Mobile Number or Email Address">
+                  Update Mobile Number or Email Address
+                </option>
+                <option value="Transaction Issues">Resolve Transaction Issues</option>
+                <option value="Activate or Unblock Bank Account or Card">
+                  Activate or Unblock Bank Account/Card
+                </option>
+                <option value="Loan Application">Apply for a Loan</option>
+                <option value="Fixed Deposits or Investment Options">
+                  Fixed Deposits or Investment Options
+                </option>
+                <option value="Bank Certificate or Account Confirmation Letter">
+                  Bank Certificate or Account Confirmation Letter
+                </option>
+              </select>
+
+            </div>
+
+            <button type="submit" class="btn btn-primary w-100 py-2 fw-semibold mb-2" [disabled]="bookingForm.invalid">
+              Confirm Appointment
+            </button>
+            <button type="button" class="btn btn-outline-secondary w-100 py-2" (click)="resetForm()">
+              Cancel
+            </button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  } @else {
+  <!-- ==================== CONFIRMATION VIEW ==================== -->
+  <div class="row justify-content-center">
+    <div class="col-lg-8">
+      <div class="card card-enterprise p-5 text-center shadow-sm">
+        <div class="mb-3">
+          <span
+            class="success-icon d-inline-flex align-items-center justify-content-center bg-success text-white rounded-circle">
+            <i class="bi bi-check-lg fs-1"></i>
+          </span>
+        </div>
+        <h2 class="fw-bold mb-2">Appointment Confirmed!</h2>
+        <p class="text-muted mb-4">
+          Your appointment has been successfully scheduled.
+        </p>
+
+        <div class="card bg-light border text-start mb-4">
+          <div class="card-header bg-body-secondary fw-bold py-2">
+            Appointment Details
+          </div>
+          <div class="card-body">
+            <div class="row g-3">
+              <div class="col-md-4">
+                <div class="small text-muted fw-semibold">Service</div>
+                <div class="fw-medium">{{ confirmation.purpose }}</div>
+              </div>
+              <div class="col-md-4">
+                <div class="small text-muted fw-semibold">Date</div>
+                <div class="fw-medium">{{ confirmation.date }}</div>
+              </div>
+              <div class="col-md-4">
+                <div class="small text-muted fw-semibold">Time</div>
+                <div class="fw-medium">{{ confirmation.time }}</div>
+              </div>
+              <hr class="my-2" />
+              <div class="col-md-4">
+                <div class="small text-muted fw-semibold">Consultant</div>
+                <div class="fw-medium">Jhon Smith</div>
+              </div>
+              <div class="col-md-4">
+                <div class="small text-muted fw-semibold">
+                  Location <span class="badge bg-primary ms-1">Branch</span>
+                </div>
+                <div class="fw-medium">{{ confirmation.branch }}</div>
+              </div>
+              <div class="col-md-4">
+                <div class="small text-muted fw-semibold">
+                  Confirmation ID
+                </div>
+                <div class="fw-bold text-primary">
+                  {{ confirmation.id }}
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card-footer bg-body-tertiary small text-muted fst-italic">
+            <strong>Notes:</strong> {{ confirmation.notes }}
+          </div>
+        </div>
+
+        <div class="d-flex gap-3 justify-content-center">
+          <button type="button" class="btn btn-primary px-4 py-2 fw-semibold" (click)="resetForm()">
+            Return to Home
+          </button>
+          <button type="button" class="btn btn-outline-secondary px-4 py-2" (click)="printConfirmation()">
+            Print Confirmation
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  }
+</div>
